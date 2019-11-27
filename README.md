@@ -1,5 +1,8 @@
 # NodeJS REST API for SQLite database Project
 
+## Requirements
+- NodeJS (12.12.0)
+
 ## Starter command
 
 1. Setup: need NodeJS 8+ version and npm
