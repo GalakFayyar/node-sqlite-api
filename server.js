@@ -22,16 +22,14 @@ const server = app.listen(port, () => {
     console.log('Connected to port ' + port);
 })
 
-// error handler
+// Error handler
 app.use(function(err, req, res, next) {
     console.error(err.message); // Log error message in our server's console
     if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
     res.status(err.statusCode).send(err.message); // All HTTP requests must have a response, so let's send back an error with its status code and message
 });
 
-/**
- * Init swagger generator
- */
+// Init swagger generator
 const swaggerOptions = {
     swaggerDefinition: {
         info: {
@@ -42,8 +40,7 @@ const swaggerOptions = {
         host: conf.api.address + ':' + conf.api.port,
         basePath: '/',
         produces: [
-            "application/json",
-            // "application/xml"
+            "application/json"
         ],
         schemes: ['http', 'https'],
         url: '/swagger.json'
@@ -59,7 +56,6 @@ app.use('/swagger.json', function(req, res) {
 app.use('/api-docs', swaggerUi({
     docs: '/swagger.json' // from the express route above.
 }));
-// Nouveau socle technique : swagger servi à la racine
 app.use('/', swaggerUi({
     docs: '/swagger.json' // from the express route above.
 }));
