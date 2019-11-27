@@ -4,7 +4,7 @@ let express = require('express'),
 
 /**
  * Get all parameters
- * @route GET /api/parameters/
+ * @route GET /api-fts-online/parameters/
  * @group General - Active routes
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
@@ -26,7 +26,7 @@ parametersRoute.route('/').get((req, res, next) => {
 
 /**
  * Get a parameter from its id
- * @route GET /api/parameters/{id}
+ * @route GET /api-fts-online/parameters/{id}
  * @group General - Active routes
  * @param {string} id.path.required - parameter id from SQLite database
  * @returns {object} 200 - List of parameters
@@ -49,7 +49,7 @@ parametersRoute.route('/:id').get((req, res, next) => {
 
 /**
  * Create a new parameter
- * @route POST /api/parameters/
+ * @route POST /api-fts-online/parameters/
  * @group General - Active routes
  * @consumes application/json application/xml
  * @param {json} body.req
@@ -92,7 +92,7 @@ parametersRoute.route('/').post((req, res, next) => {
 
 /**
  * Update a parameter from its id
- * @route PATCH /api/parameters/{id}
+ * @route PATCH /api-fts-online/parameters/{id}
  * @group General - Active routes
  * @param {string} id.path.required - parameter id to update
  * @returns {object} 200 - List of parameters
@@ -140,7 +140,7 @@ parametersRoute.route('/:id').patch((req, res, next) => {
 
 /**
  * Delete a parameter from its id
- * @route DELETE /api/parameters/{id}
+ * @route DELETE /api-fts-online/parameters/{id}
  * @group General - Active routes
  * @param {string} id.path.required - parameter id to delete
  * @returns {object} 200 - List of parameters

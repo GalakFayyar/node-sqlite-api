@@ -1,0 +1,9 @@
+{
+    "api": {
+        "name": "api-fts-online",
+        "version": "1.0.0.0",
+        "address": "localhost",
+        "port": "4000"
+    },
+    "dbName": "ftsOnlineDB"
+}

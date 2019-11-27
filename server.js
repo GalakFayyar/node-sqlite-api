@@ -5,7 +5,8 @@ let express = require('express'),
    app = express(),
    expressSwagger = require('express-swagger-generator')(app),
    swaggerUi = require('express-swaggerize-ui'),
-   parametersRoute = require('./routes/parameters.route');
+   parametersRoute = require('./routes/parameters.route'),
+   conf = require("./conf/conf.json");
 
 // Setting up port with express js
 app.use(bodyParser.json());
@@ -13,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cors()); 
 app.use(express.static(path.join(__dirname, 'dist/mean-stack-crud-app')));
 app.use('/', express.static(path.join(__dirname, 'dist/mean-stack-crud-app')));
-app.use('/api/parameters', parametersRoute);
+app.use('/' + conf.api.name + '/parameters', parametersRoute);
 
 // Create port
 const port = process.env.PORT || 4000;
@@ -35,10 +36,10 @@ var swaggerOptions = {
    swaggerDefinition: {
        info: {
            description: 'API for FST Online Server',
-           title: 'fts-online',
-           version: '1.0.0.0',
+           title: conf.api.name,
+           version: conf.api.version,
        },
-       host: 'localhost:4000',
+       host: conf.api.address + ':' + conf.api.port,
        basePath: '/',
        produces: [
            "application/json",
