@@ -1,14 +1,14 @@
-var sqlite3 = require('sqlite3').verbose();
-const DBSOURCE = "database/db.sqlite";
-
-let db = new sqlite3.Database(DBSOURCE, (err) => {
-    if (err) {
-      // Cannot open database
-      console.error(err.message);
-      throw err;
-    }else{
-        console.log('Connected to the SQLite database.');
-        db.run(`CREATE TABLE Parameters (
+const sqlite3 = require('sqlite3').verbose(),
+    conf = require("../conf/conf.json"),
+    DBSOURCE = 'database/' + conf.dbName + '.sqlite',
+    db = new sqlite3.Database(DBSOURCE, (err) => {
+        if (err) {
+            // Cannot open database
+            console.error(err.message);
+            throw err;
+        } else {
+            console.log('Connected to the SQLite database.');
+            db.run(`CREATE TABLE Parameters (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             protocol text, 
             IP text, 
@@ -22,7 +22,7 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
             transactionAmountOther text, 
             CONSTRAINT protocol_unique UNIQUE (protocol)
             ); ` +
-            `CREATE TABLE ApplicationIdentifier (
+                `CREATE TABLE ApplicationIdentifier (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 label text, 
                 tacOnline text, 
@@ -37,18 +37,18 @@ let db = new sqlite3.Database(DBSOURCE, (err) => {
                 msLegacyModeApplicability text, 
                 keySet text, 
                 connection text
-                )`,
-        (err) => {
-            if (err) {
-                // Table already created
-                console.log('Tables already created. Use of existing data.');
-            } else {
-                // Table just created, creating some
-                console.log('Tables created. Empty tables built.');
-            }
-        });  
-    }
-});
+            )`,
+                (err) => {
+                    if (err) {
+                        // Table already created
+                        console.log('Tables already created. Use of existing data.');
+                    } else {
+                        // Table just created, creating some
+                        console.log('Tables created. Empty tables built.');
+                    }
+                });
+        }
+    });
 
 
 module.exports = db;

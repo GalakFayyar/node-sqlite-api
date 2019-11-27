@@ -13,38 +13,38 @@ parametersRoute.route('/').get((req, res, next) => {
     var sql = "select * from Parameters"
     var params = []
     db.all(sql, params, (err, rows) => {
-          if (err) {
-          res.status(400).json({"error":err.message});
-          return;
-          }
-          res.json({
-             "message":"success",
-             "data":rows
-          })
-       });
+        if (err) {
+            res.status(400).json({ "error": err.message });
+            return;
+        }
+        res.json({
+            "message": "success",
+            "data": rows
+        })
+    });
 });
 
 /**
  * Get a parameter from its id
  * @route GET /api-fts-online/parameters/{id}
  * @group General - Active routes
- * @param {string} id.path.required - parameter id from SQLite database
+ * @param {string} id.path.required - Database parameter id from SQLite database
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
  */
 parametersRoute.route('/:id').get((req, res, next) => {
     var sql = "select * from Parameters where id = ?"
     var params = [req.params.id]
-    db.get(sql, params, (err, row) => {
+    db.get(sql, params, (err, result) => {
         if (err) {
-          res.status(400).json({"error":err.message});
-          return;
+            res.status(400).json({ "error": err.message });
+            return;
         }
         res.json({
-            "message":"success",
-            "data":row
-        })
-      });
+            message: "success",
+            data: result
+        });
+    });
 });
 
 /**
@@ -75,17 +75,17 @@ parametersRoute.route('/').post((req, res, next) => {
         transactionAmount: req.body.transactionAmount,
         transactionAmountOther: req.body.transactionAmountOther,
     };
-    var sql ='INSERT INTO Parameters (protocol, IP, port, timeout, pinKey, macKey, transactionType, usedInterface, transactionAmount, transactionAmountOther) VALUES (?,?,?,?,?,?,?,?,?,?)';
-    var params =[data.protocol, data.IP, data.port, data.timeout, data.pinKey, data.macKey, data.transactionType, data.usedInterface, data.transactionAmount, data.transactionAmountOther];
-    db.run(sql, params, function (err, result) {
-        if (err){
-            res.status(400).json({"error": err.message})
+    var sql = 'INSERT INTO Parameters (protocol, IP, port, timeout, pinKey, macKey, transactionType, usedInterface, transactionAmount, transactionAmountOther) VALUES (?,?,?,?,?,?,?,?,?,?)';
+    var params = [data.protocol, data.IP, data.port, data.timeout, data.pinKey, data.macKey, data.transactionType, data.usedInterface, data.transactionAmount, data.transactionAmountOther];
+    db.run(sql, params, function(err, result) {
+        if (err) {
+            res.status(400).json({ "error": err.message })
             return;
         }
         res.json({
-            "message": "success",
-            "data": data,
-            "id" : this.lastID
+            message: "success",
+            data: data,
+            id: this.lastID
         });
     });
 });
@@ -94,7 +94,8 @@ parametersRoute.route('/').post((req, res, next) => {
  * Update a parameter from its id
  * @route PATCH /api-fts-online/parameters/{id}
  * @group General - Active routes
- * @param {string} id.path.required - parameter id to update
+ * @param {string} id.path.required - Database parameter id to update
+ * @param {json} body.req
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
  */
@@ -123,11 +124,10 @@ parametersRoute.route('/:id').patch((req, res, next) => {
            usedInterface = COALESCE(?,usedInterface),
            transactionAmount = COALESCE(?,transactionAmount),
            transactionAmountOther = COALESCE(?,transactionAmountOther),
-           WHERE id = ?`,
-        [data.protocol, data.IP, data.port, data.timeout, data.pinKey, data.macKey, data.transactionType, data.usedInterface, data.transactionAmount, data.transactionAmountOther, req.params.id],
-        function (err, result) {
-            if (err){
-                res.status(400).json({"error": res.message})
+           WHERE id = ?`, [data.protocol, data.IP, data.port, data.timeout, data.pinKey, data.macKey, data.transactionType, data.usedInterface, data.transactionAmount, data.transactionAmountOther, req.params.id],
+        function(err, result) {
+            if (err) {
+                res.status(400).json({ "error": res.message })
                 return;
             }
             res.json({
@@ -135,14 +135,14 @@ parametersRoute.route('/:id').patch((req, res, next) => {
                 data: data,
                 changes: this.changes
             });
-    });
+        });
 });
 
 /**
  * Delete a parameter from its id
  * @route DELETE /api-fts-online/parameters/{id}
  * @group General - Active routes
- * @param {string} id.path.required - parameter id to delete
+ * @param {string} id.path.required - Database parameter id to delete
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
  */
@@ -150,13 +150,16 @@ parametersRoute.route('/:id').delete((req, res, next) => {
     db.run(
         'DELETE FROM Parameters WHERE id = ?',
         req.params.id,
-        function (err, result) {
-            if (err){
-                res.status(400).json({"error": res.message});
+        function(err, result) {
+            if (err) {
+                res.status(400).json({ "error": res.message });
                 return;
             }
-            res.json({"message":"deleted", changes: this.changes});
-    });
+            res.json({
+                message: "success",
+                changes: this.changes
+            });
+        });
 });
 
 module.exports = parametersRoute;
