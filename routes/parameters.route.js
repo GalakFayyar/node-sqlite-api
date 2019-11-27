@@ -10,8 +10,8 @@ let express = require('express'),
  * @returns {Error}  default - Unexpected error
  */
 parametersRoute.route('/').get((req, res, next) => {
-    var sql = "select * from Parameters"
-    var params = []
+    var sql = "select * from Parameters";
+    var params = [];
     db.all(sql, params, (err, rows) => {
         if (err) {
             res.status(400).json({ "error": err.message });
@@ -20,7 +20,7 @@ parametersRoute.route('/').get((req, res, next) => {
         res.json({
             "message": "success",
             "data": rows
-        })
+        });
     });
 });
 
@@ -33,8 +33,8 @@ parametersRoute.route('/').get((req, res, next) => {
  * @returns {Error}  default - Unexpected error
  */
 parametersRoute.route('/:id').get((req, res, next) => {
-    var sql = "select * from Parameters where id = ?"
-    var params = [req.params.id]
+    var sql = "select * from Parameters where id = ?";
+    var params = [req.params.id];
     db.get(sql, params, (err, result) => {
         if (err) {
             res.status(400).json({ "error": err.message });
@@ -48,11 +48,25 @@ parametersRoute.route('/:id').get((req, res, next) => {
 });
 
 /**
+ * @typedef Parameter
+ * @property {string} protocol
+ * @property {string} IP
+ * @property {string} port
+ * @property {string} timeout
+ * @property {string} pinKey
+ * @property {string} macKey
+ * @property {string} transactionType
+ * @property {string} usedInterface
+ * @property {string} transactionAmount
+ * @property {string} transactionAmountOther
+ */
+
+/**
  * Create a new parameter
  * @route POST /api-fts-online/parameters/
  * @group General - Active routes
- * @consumes application/json application/xml
- * @param {json} body.req
+ * @consumes application/json
+ * @param {Parameter.model} req.body
  * @returns {object} 200 - New parameter created in database
  * @returns {Error}  default - Unexpected error
  */
@@ -63,6 +77,7 @@ parametersRoute.route('/').post((req, res, next) => {
     //     res.status(400).json({"error":errors.join(",")});
     //     return;
     // }
+    console.log(req.body);
     var data = {
         protocol: req.body.protocol,
         IP: req.body.IP,
@@ -95,7 +110,7 @@ parametersRoute.route('/').post((req, res, next) => {
  * @route PATCH /api-fts-online/parameters/{id}
  * @group General - Active routes
  * @param {string} id.path.required - Database parameter id to update
- * @param {json} body.req
+ * @param {Parameter.model} req.body
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
  */
