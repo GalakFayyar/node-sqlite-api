@@ -5,7 +5,7 @@ let express = require('express'),
 /**
  * Get all parameters
  * @route GET /api/parameters/
- * @group Active - Active routes
+ * @group General - Active routes
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
  */
@@ -27,7 +27,7 @@ parametersRoute.route('/').get((req, res, next) => {
 /**
  * Get a parameter from its id
  * @route GET /api/parameters/{id}
- * @group Active - Active routes
+ * @group General - Active routes
  * @param {string} id.path.required - parameter id from SQLite database
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
@@ -50,7 +50,7 @@ parametersRoute.route('/:id').get((req, res, next) => {
 /**
  * Create a new parameter
  * @route POST /api/parameters/
- * @group Active - Active routes
+ * @group General - Active routes
  * @consumes application/json application/xml
  * @param {json} body.req
  * @returns {object} 200 - New parameter created in database
@@ -93,7 +93,7 @@ parametersRoute.route('/').post((req, res, next) => {
 /**
  * Update a parameter from its id
  * @route PATCH /api/parameters/{id}
- * @group Active - Active routes
+ * @group General - Active routes
  * @param {string} id.path.required - parameter id to update
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
@@ -141,7 +141,7 @@ parametersRoute.route('/:id').patch((req, res, next) => {
 /**
  * Delete a parameter from its id
  * @route DELETE /api/parameters/{id}
- * @group Active - Active routes
+ * @group General - Active routes
  * @param {string} id.path.required - parameter id to delete
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
