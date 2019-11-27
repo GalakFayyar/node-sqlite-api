@@ -94,7 +94,7 @@ parametersRoute.route('/').post((req, res, next) => {
     var params = [data.protocol, data.IP, data.port, data.timeout, data.pinKey, data.macKey, data.transactionType, data.usedInterface, data.transactionAmount, data.transactionAmountOther];
     db.run(sql, params, function(err, result) {
         if (err) {
-            res.status(400).json({ "error": err.message })
+            res.status(400).json({ "error": err.message });
             return;
         }
         res.json({
@@ -142,7 +142,7 @@ parametersRoute.route('/:id').patch((req, res, next) => {
            WHERE id = ?`, [data.protocol, data.IP, data.port, data.timeout, data.pinKey, data.macKey, data.transactionType, data.usedInterface, data.transactionAmount, data.transactionAmountOther, req.params.id],
         function(err, result) {
             if (err) {
-                res.status(400).json({ "error": res.message })
+                res.status(400).json({ "error": res.message });
                 return;
             }
             res.json({
