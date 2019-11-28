@@ -140,8 +140,9 @@ parametersRoute.route('/:id').patch((req, res, next) => {
            transactionType = COALESCE(?,transactionType),
            usedInterface = COALESCE(?,usedInterface),
            transactionAmount = COALESCE(?,transactionAmount),
-           transactionAmountOther = COALESCE(?,transactionAmountOther),
-           WHERE id = ?`, [data.protocol, data.IP, data.port, data.timeout, data.pinKey, data.macKey, data.transactionType, data.usedInterface, data.transactionAmount, data.transactionAmountOther, req.params.id],
+           transactionAmountOther = COALESCE(?,transactionAmountOther)
+        WHERE id = ?`, 
+        [data.protocol,data.IP,data.port,data.timeout,data.pinKey,data.macKey,data.transactionType,data.usedInterface,data.transactionAmount,data.transactionAmountOther,req.params.id],
         function(err, result) {
             if (err) {
                 res.status(400).json({ "error": res.message });

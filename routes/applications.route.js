@@ -9,14 +9,14 @@ let express = require('express'),
  * @property {string} tacOnline
  * @property {string} tacDenial
  * @property {string} tacDefault
- * @property {string} skipSecondGenAc
+ * @property {boolean} skipSecondGenAc
  * @property {string} appVersion
  * @property {string} defaultDDOL
  * @property {string} defaultTDOL
  * @property {string} supportedInterfaces
  * @property {string} contactlessProfile
  * @property {string} contactlessKernel
- * @property {string} msLegacyMode
+ * @property {boolean} msLegacyMode
  * @property {string} keySet
  * @property {string} connection
  */
@@ -102,7 +102,7 @@ applicationsRoute.route('/').post((req, res, next) => {
         keySet: req.body.keySet,
         connection: req.body.connection,
     };
-    var sql = 'INSERT INTO Applications (aid,label,tacOnline,tacDenial,tacDefault,skipSecondGenAc,appVersion,defaultDDOL,defaultTDOL,supportedInterfaces,contactlessProfile,contactlessKernel,msLegacyMode,keySet,connection) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
+    var sql = 'INSERT INTO Applications (aid,label,tacOnline,tacDenial,tacDefault,skipSecondGenAc,appVersion,defaultDDOL,defaultTDOL,supportedInterfaces,contactlessProfile,contactlessKernel,msLegacyMode,keySet,connection) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
     var params = [data.aid,data.label,data.tacOnline,data.tacDenial,data.tacDefault,data.skipSecondGenAc,data.appVersion,data.defaultDDOL,data.defaultTDOL,data.supportedInterfaces,data.contactlessProfile,data.contactlessKernel,data.msLegacyMode,data.keySet,data.connection];
     db.run(sql, params, function(err, result) {
         if (err) {
@@ -145,7 +145,7 @@ applicationsRoute.route('/:id').patch((req, res, next) => {
         connection: req.body.connection,
     };
     db.run(
-        `UPDATE Applications set 
+        `UPDATE Applications SET 
             aid = COALESCE(?,aid),
             label = COALESCE(?,label),
             tacOnline = COALESCE(?,tacOnline),
@@ -160,9 +160,9 @@ applicationsRoute.route('/:id').patch((req, res, next) => {
             contactlessKernel = COALESCE(?,contactlessKernel),
             msLegacyMode = COALESCE(?,msLegacyMode),
             keySet = COALESCE(?,keySet),
-            connection = COALESCE(?,connection),
+            connection = COALESCE(?,connection)
         WHERE id = ?`, 
-        [data.aid,data.label,data.tacOnline,data.tacDenial,data.tacDefault,data.skipSecondGenAc,data.appVersion,data.defaultDDOL,data.defaultTDOL,data.supportedInterfaces,data.contactlessProfile,data.contactlessKernel,data.msLegacyMode,data.keySet,data.connection],
+        [data.aid,data.label,data.tacOnline,data.tacDenial,data.tacDefault,data.skipSecondGenAc,data.appVersion,data.defaultDDOL,data.defaultTDOL,data.supportedInterfaces,data.contactlessProfile,data.contactlessKernel,data.msLegacyMode,data.keySet,data.connection,req.params.id],
         function(err, result) {
             if (err) {
                 res.status(400).json({ "error": res.message });
