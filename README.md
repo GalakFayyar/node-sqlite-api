@@ -10,7 +10,7 @@
 3. Launch the server with `node server.js`
 
 ## Tips & Tricks
-- Use `nodemon` to autoreload the project for development purposes
+- Use `nodemon` to autoreload the project for development purposes : `npm install -g nodemon`
 - Launch the project with `nodemon server.js` command
 
 ## Use of Swagger UI !
