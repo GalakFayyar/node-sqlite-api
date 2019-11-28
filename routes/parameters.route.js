@@ -21,7 +21,7 @@ let express = require('express'),
 /**
  * Get all parameters
  * @route GET /api-fts-online/parameters/
- * @group General - Active routes
+ * @group Parameters routes - Active routes
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
  */
@@ -43,7 +43,7 @@ parametersRoute.route('/').get((req, res, next) => {
 /**
  * Get a parameter from its id
  * @route GET /api-fts-online/parameters/{id}
- * @group General - Active routes
+ * @group Parameters routes - Active routes
  * @param {string} id.path.required - Database parameter id from SQLite database
  * @returns {object} 200 - List of parameters
  * @returns {Error}  default - Unexpected error
@@ -66,7 +66,7 @@ parametersRoute.route('/:id').get((req, res, next) => {
 /**
  * Create a new parameter
  * @route POST /api-fts-online/parameters/
- * @group General - Active routes
+ * @group Parameters routes - Active routes
  * @consumes application/json
  * @param {Parameter.model} req.body
  * @returns {object} 200 - New parameter created in database
@@ -110,10 +110,10 @@ parametersRoute.route('/').post((req, res, next) => {
 /**
  * Update a parameter from its id
  * @route PATCH /api-fts-online/parameters/{id}
- * @group General - Active routes
+ * @group Parameters routes - Active routes
  * @param {string} id.path.required - Database parameter id to update
  * @param {Parameter.model} req.body
- * @returns {object} 200 - List of parameters
+ * @returns {object} 200 - Update parameter
  * @returns {Error}  default - Unexpected error
  */
 parametersRoute.route('/:id').patch((req, res, next) => {
@@ -158,9 +158,9 @@ parametersRoute.route('/:id').patch((req, res, next) => {
 /**
  * Delete a parameter from its id
  * @route DELETE /api-fts-online/parameters/{id}
- * @group General - Active routes
+ * @group Parameters routes - Active routes
  * @param {string} id.path.required - Database parameter id to delete
- * @returns {object} 200 - List of parameters
+ * @returns {object} 200 - List of changes on parameter
  * @returns {Error}  default - Unexpected error
  */
 parametersRoute.route('/:id').delete((req, res, next) => {

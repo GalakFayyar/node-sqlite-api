@@ -8,47 +8,62 @@ const sqlite3 = require('sqlite3').verbose(),
             throw err;
         } else {
             console.log('Connected to the SQLite database.');
-            db.run(`CREATE TABLE Parameters (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            protocol text, 
-            IP text, 
-            port text, 
-            timeout text, 
-            pinKey text, 
-            macKey text, 
-            transactionType text, 
-            usedInterface text, 
-            transactionAmount text, 
-            transactionAmountOther text, 
-            CONSTRAINT protocol_unique UNIQUE (protocol)
-            ); ` +
-                `CREATE TABLE ApplicationIdentifier (
+            db.run(
+            `CREATE TABLE Parameters (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                label text, 
-                tacOnline text, 
-                tacDenial text, 
-                tacDefault text, 
-                appVersion text, 
-                defaultDDOL text, 
-                defaultTDOL text, 
-                interfaceSupported text, 
-                contactlessProfile text, 
-                contactlessKernel text, 
-                msLegacyModeApplicability text, 
-                keySet text, 
-                connection text
-            )`,
+                protocol text, 
+                IP text, 
+                port text, 
+                timeout text, 
+                pinKey text, 
+                macKey text, 
+                transactionType text, 
+                usedInterface text, 
+                transactionAmount text, 
+                transactionAmountOther text, 
+            CONSTRAINT protocol_unique UNIQUE (protocol)
+            ); `,
                 (err) => {
                     if (err) {
                         // Table already created
-                        console.log('Tables already created. Use of existing data.');
+                        console.log('Parameters table already created. Use of existing Parameters table.');
                     } else {
                         // Table just created, creating some
-                        console.log('Tables created. Empty tables built.');
+                        console.log('Parameters table created.');
                     }
-                });
+                }
+            );
+            db.run(
+                `CREATE TABLE Applications (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    aid text,
+                    label text,
+                    tacOnline text,
+                    tacDenial text,
+                    tacDefault text,
+                    skipSecondGenAc text,
+                    appVersion text,
+                    defaultDDOL text,
+                    defaultTDOL text,
+                    supportedInterfaces text,
+                    contactlessProfile text,
+                    contactlessKernel text,
+                    msLegacyMode text,
+                    keySet text,
+                    connection text,
+                CONSTRAINT aid_unique UNIQUE (aid)
+                );`,
+                    (err) => {
+                        if (err) {
+                            // Table already created
+                            console.log('Applications table already created. Use of existing Applications table.');
+                        } else {
+                            // Table just created, creating some
+                            console.log('Applications table created.');
+                        }
+                    }
+                );
         }
     });
-
 
 module.exports = db;
