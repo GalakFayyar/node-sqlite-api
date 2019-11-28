@@ -3,6 +3,22 @@ let express = require('express'),
     parametersRoute = express.Router();
 
 /**
+ * @typedef Parameter
+ * @property {string} protocol
+ * @property {string} IP
+ * @property {string} port
+ * @property {string} timeout
+ * @property {string} pinKey
+ * @property {string} macKey
+ * @property {string} transactionType
+ * @property {string} usedInterface
+ * @property {string} transactionAmount
+ * @property {string} transactionAmountOther
+ */
+
+// Standard CRUD operations
+
+/**
  * Get all parameters
  * @route GET /api-fts-online/parameters/
  * @group General - Active routes
@@ -46,20 +62,6 @@ parametersRoute.route('/:id').get((req, res, next) => {
         });
     });
 });
-
-/**
- * @typedef Parameter
- * @property {string} protocol
- * @property {string} IP
- * @property {string} port
- * @property {string} timeout
- * @property {string} pinKey
- * @property {string} macKey
- * @property {string} transactionType
- * @property {string} usedInterface
- * @property {string} transactionAmount
- * @property {string} transactionAmountOther
- */
 
 /**
  * Create a new parameter
